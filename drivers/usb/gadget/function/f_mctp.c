@@ -272,7 +272,7 @@ static void mctp_usbg_handle_rx_urb(struct f_mctp *mctp,
 	skb_reset_network_header(skb);
 	cb = __mctp_cb(skb);
 	cb->halen = 0;
-	dev_dstats_rx_add(mctp->dev, skb->len);
+	//dev_dstats_rx_add(mctp->dev, skb->len);
 	netif_rx(skb);
 
 	return;
@@ -332,7 +332,7 @@ static void mctp_usbg_in_ep_complete(struct usb_ep *ep,
 
 	switch (req->status) {
 	case 0:
-		dev_dstats_tx_add(mctp->dev, skb->len);
+		//dev_dstats_tx_add(mctp->dev, skb->len);
 		spin_lock_irqsave(&mctp->lock, flags);
 		if (list_empty(&mctp->tx_reqs))
 			netif_wake_queue(mctp->dev);
@@ -345,7 +345,7 @@ static void mctp_usbg_in_ep_complete(struct usb_ep *ep,
 	case -ECONNABORTED:
 	case -ECONNRESET:
 	case -ESHUTDOWN:
-		dev_dstats_tx_dropped(mctp->dev);
+		//dev_dstats_tx_dropped(mctp->dev);
 		usb_ep_free_request(ep, req);
 		break;
 	}
@@ -483,13 +483,13 @@ static netdev_tx_t mctp_usbg_start_xmit(struct sk_buff *skb,
 
 	usb_ep_queue(mctp->in_ep, req, GFP_ATOMIC);
 
-	dev_dstats_tx_add(dev, skb->len);
+	//dev_dstats_tx_add(dev, skb->len);
 
 	return NETDEV_TX_OK;
 
 drop:
 	kfree_skb(skb);
-	dev_dstats_tx_dropped(dev);
+	//dev_dstats_tx_dropped(dev);
 	return NETDEV_TX_OK;
 }
 
