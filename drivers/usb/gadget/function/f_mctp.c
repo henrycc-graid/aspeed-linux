@@ -18,7 +18,8 @@
 #include <net/mctp.h>
 #include <net/pkt_sched.h>
 
-#include <linux/usb/func_utils.h>
+//#include <linux/usb/func_utils.h>
+#include "u_f.h"
 #include <linux/usb/mctp-usb.h>
 
 #include <uapi/linux/if_arp.h>
